@@ -4,6 +4,7 @@ import json                             #Reading the received data from requests
 import discord                          #Discord OwO
 from discord.ext import commands        #Discord commands OwO
 from time import sleep                  #Make the bot wait before a certain task
+from keepAlive import keep_alive
 
 # Required for bot to welcome members
 intents = discord.Intents.default()
@@ -20,15 +21,15 @@ bot = commands.Bot(
 TOKEN = os.environ['token']
 
 # The channel and guild IDs
-general = 826356833790722068
+chitchat = 826356833790722068
 welcome = 839035255049945120
 
 @bot.event
 async def on_ready():
-  generalChannel = bot.get_channel(general)
-  allowed_mentions = discord.AllowedMentions(everyone = True)
-  await generalChannel.send(content = "@everyone", allowed_mentions = allowed_mentions)
-  await generalChannel.send(f'I am online. Type "Pls help" for the help menu')  
+  # chitchatChannel = bot.get_channel(chitchat)
+  # allowed_mentions = discord.AllowedMentions(everyone = True)
+  # await chitchatChannel.send(content = "@everyone", allowed_mentions = allowed_mentions)
+  # await chitchatChannel.send(f'I am online. Type "Pls help" for the help menu')  
   print(f'Bot connected as {bot.user}')
 
 #                                       THE INSULT METHOD
@@ -92,6 +93,11 @@ async def help(ctx):
     value = 'Delete recent 1000 texts from the channel',
     inline = False
   )
+  helpEmbed.add_field(
+    name = 'Pls source',
+    value = 'Display the program of the bot',
+    inline = False
+  )
   # Send the help embed 
   await ctx.reply(embed = helpEmbed)
 
@@ -144,6 +150,18 @@ async def invite(ctx):
     )
   await ctx.reply(embed = inviteEmbed)
 
+@bot.command()
+async def source(ctx):
+  link = 'https://github.com/acidOP/discordBot/blob/main/main.py'
+  sourceEmbed = discord.Embed(
+    name = "Here's my source code",
+    # link to github repo 
+    description = link,
+    # neon green
+    color = 0x00ff00
+    )
+  await ctx.reply(embed = sourceEmbed)
+
 @bot.event
 async def on_message(message):
 
@@ -155,6 +173,10 @@ async def on_message(message):
 
   # Running the commands
   await bot.process_commands(message)
+
+# The function requests the bot after sometime
+# So that it does not get in sleep mode in the webserver
+keep_alive()
 
 # Run instance of the bot
 bot.run(TOKEN)
