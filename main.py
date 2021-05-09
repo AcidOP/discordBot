@@ -1,7 +1,6 @@
 import os  
 import discord  
 from discord.ext import commands 
-from keepAlive import keep_alive
 
 intents = discord.Intents.default()
 intents.members = True
@@ -52,8 +51,6 @@ for file in os.listdir('./cogs'):
 	if file.endswith('.py'):
 		bot.load_extension(f'cogs.{file[:-3]}')
 		print(f'The cog {file[:-3]} was loaded')
-
-keep_alive()
 
 # Run instance of the bot
 bot.run(TOKEN)
