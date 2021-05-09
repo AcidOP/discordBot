@@ -36,7 +36,7 @@ async def on_message(message):
 
 	if str(message.channel.type) == 'private':
 		modChannel = discord.utils.get(bot.get_all_channels(),
-		                               name='moderators')
+		                               name='mod-mail')
 		await modChannel.send(f'[{message.author.name}] : {message.content}')
 		return
 
