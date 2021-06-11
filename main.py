@@ -16,7 +16,7 @@ TOKEN = os.environ['token']
 
 def record(author, message):
 	with open('hist.txt', 'w') as hist:
-		hist.write(f'{author} : {message}'
+		hist.write(f'{author} : {message}')
 
 @bot.event
 async def on_member_join(member):
