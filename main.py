@@ -15,9 +15,8 @@ bot = commands.Bot(command_prefix="Pls",
 TOKEN = os.environ['token']
 
 def record(author, message):
-	hist = open('hist.text', 'a')
-	hist.write(f'\n{author} : {message}')
-	hist.close()
+	with open('hist.txt', 'w') as hist:
+		hist.write(f'{author} : {message}'
 
 @bot.event
 async def on_member_join(member):
